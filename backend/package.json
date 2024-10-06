@@ -1,0 +1,27 @@
+{
+  "name": "clubconnect-backend",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc src/",
+    "run": "./dist/index.js",
+    "dev": "tsc src/ && ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "The Best CS222 Group",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "tsc": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
