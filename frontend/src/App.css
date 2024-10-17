@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+
+.clubs-section {
+  text-align: left;
+  padding: 20px;
+  color: white;
+  background-color: antiquewhite;
+}
+
+.clubs-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.club-card {
+  padding: 15px;
+  color: white;
+  background-color: antiquewhite;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
