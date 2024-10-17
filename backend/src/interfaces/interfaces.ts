@@ -1,14 +1,13 @@
-/* 
-  Considerations:
-    - type of ids for events, user, orgs, do you want it to be a string?
-    - converting special types like dates into their mongodb counterparts
-*/
- 
-export interface Event {
-  meetingId: string;
+import {Document} from 'mongodb';
+
+// TODO - finish learning how to use mongoose and mongodb in translating interfaces to documents and back
+
+export interface Event extends Document {
+  eventId: string;
 
   // the name of the event
   name: string;
+  description: string;
   
   // set a range for the event timing
   startDateAndTime: Date;
@@ -19,13 +18,15 @@ export interface Event {
   membersAttending: number;
 }
 
-export interface Organization {
+export interface Organization extends Document {
   name: string;
+  description: string;
 
   established: Date;
   memberCount: number;
   
   organizationId: string;
+  profilePictureUrl: string;
   
   // list of all events for the club, sorted by date
   events: Event[];
@@ -33,7 +34,7 @@ export interface Organization {
   keywords: Keyword[];
 }
 
-export interface User {
+export interface User extends Document {
   userId: string;
 
   // personal information for profile
@@ -43,6 +44,7 @@ export interface User {
   age: number;
   
   bio: string;
+  profilePictureUrl: string;
   
   // keywords that represent interests to match for finding clubs that one might like
   keywords: Keyword[];
