@@ -1,7 +1,32 @@
 import React from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
+import Clubs from './pages/Clubs'
+import Login from './pages/Login'
+import NoPage from './pages/NoPage'
+
 import logo from './logo.svg';
 import './App.css';
 
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home/>}/>
+          <Route path='/home' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/clubs' element={<Clubs/>}/>
+          <Route path='*' element={<NoPage/>}/>
+        </Routes>
+      </BrowserRouter>
+    </div>
+  )
+}
+
+/*
 function App() {
   return (
     <div className="App">
@@ -23,17 +48,17 @@ function App() {
       <section className = "clubs-section">
         <h1>Discover New Clubs on Campus</h1>
         <div className="clubs-container">
-{/*           {clubs.map((club, index) => ( 
+          {clubs.map((club, index) => ( 
             <div key={index} className = "club-card">
               <h3>{club.name}</h3>
               <p>Category: {club.category}</p>
               <p>Meeting Time: {club.meetTime}</p>
             </div>
-            ))} */}
+            ))}
         </div>
       </section>
     </div>
   );
-}
+}*/
 
 export default App;
