@@ -1,29 +1,27 @@
-import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './pages/Home'
-import Profile from './pages/Profile'
-import Clubs from './pages/Clubs'
-import Login from './pages/Login'
-import NoPage from './pages/NoPage'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Clubs from "./pages/Clubs";
+import Login from "./pages/Login";
+import NoPage from "./pages/NoPage";
 
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home/>}/>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/clubs' element={<Clubs/>}/>
-          <Route path='*' element={<NoPage/>}/>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/clubs" element={<Clubs />} />
+        <Route path="*" element={<NoPage />} />
+      </Routes>
     </div>
-  )
+  );
 }
 
 /*
