@@ -19,20 +19,20 @@ function App() {
           Learn React
         </a>
       </header>
+    
+      <section className = "clubs-section">
+        <h1>Discover New Clubs on Campus</h1>
+        <div className="clubs-container">
+{/*           {clubs.map((club, index) => ( 
+            <div key={index} className = "club-card">
+              <h3>{club.name}</h3>
+              <p>Category: {club.category}</p>
+              <p>Meeting Time: {club.meetTime}</p>
+            </div>
+            ))} */}
+        </div>
+      </section>
     </div>
-
-    <section className = "clubs-section">
-      <h1>Discover New Clubs on Campus</h1>
-      <div className="clubs-container">
-        {clubs.map((club, index) => ( 
-          <div key={index} className = "club-card">
-            <h3>{club.name}</h3>
-            <p>Category: {club.category}</p>
-            <p>Meeting Time: {club.meetTime}</p>
-          </div>
-          ))}
-      </div>
-    </section>
   );
 }
 
