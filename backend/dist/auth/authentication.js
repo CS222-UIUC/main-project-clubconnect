@@ -36,7 +36,7 @@ function jwtAuthMiddleware(req, res, next) {
         // change this in production to use the key loaded from the env file
         jsonwebtoken_1.default.verify(authToken, SUPER_SECRET_KEY_FOR_JWT_SIGNING);
     }
-    catch (error) {
+    catch (_a) {
         res.status(401).json({ message: "JWT is expired or invalid" });
         return;
     }
@@ -49,7 +49,7 @@ function hashPassword(plaintextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         // use a moderate number of salting rounds for proper security
         const numberOfSaltingRounds = 10;
-        let hashedPassword = yield bcrypt_1.default.hash(plaintextPassword, numberOfSaltingRounds);
+        const hashedPassword = yield bcrypt_1.default.hash(plaintextPassword, numberOfSaltingRounds);
         return hashedPassword;
     });
 }

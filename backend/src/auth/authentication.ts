@@ -24,7 +24,7 @@ export function jwtAuthMiddleware(req: Request, res: Response, next: NextFunctio
   try {
     // change this in production to use the key loaded from the env file
     jwt.verify(authToken, SUPER_SECRET_KEY_FOR_JWT_SIGNING);
-  } catch(error) {
+  } catch {
     res.status(401).json({message: "JWT is expired or invalid"});
     return;
   }
@@ -39,7 +39,7 @@ export async function hashPassword(plaintextPassword: string): Promise<string> {
   // use a moderate number of salting rounds for proper security
   const numberOfSaltingRounds = 10;
   
-  let hashedPassword = await bcrypt.hash(plaintextPassword, numberOfSaltingRounds);
+  const hashedPassword = await bcrypt.hash(plaintextPassword, numberOfSaltingRounds);
   
   return hashedPassword;
 }

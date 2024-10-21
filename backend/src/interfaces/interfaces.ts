@@ -35,8 +35,6 @@ export interface Organization extends Document {
 }
 
 export interface User extends Document {
-  userId: string;
-
   // personal information for profile
   firstName: string;
   lastName: string;

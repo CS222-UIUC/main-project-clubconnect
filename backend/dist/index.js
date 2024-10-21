@@ -13,8 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+// import { initializeDatabaseConnection, initializeEnvironmentalVariables } from './databaseSetup/initializeConnection';
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
+        // initialize connection pool and environment variables
+        // initializeEnvironmentalVariables();
+        // await initializeDatabaseConnection();
         const application = (0, express_1.default)();
         const port = process.env.BACKEND_SERVER_PORT || 3000;
         // use the json middleware 
@@ -29,5 +33,5 @@ function main() {
 // keep this function call here. We don't really need to have a main function but makes the code structuring a bit easier
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield main();
-}));
+}))();
 // use MOCHA/chai library for route testing 
