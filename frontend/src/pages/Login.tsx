@@ -1,10 +1,10 @@
-import Header from "../components/Header"
+import Navbar from "../components/Navbar"
 
 export default function Login() {
     return (
         <div>
-            <Header/>
-            <h2>Login</h2>
+            <Navbar/>
+            <h2>Login to your account</h2>
         </div>
     )
 }
