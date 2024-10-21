@@ -1,10 +1,10 @@
-import Header from "../components/Header"
+import Navbar from "../components/Navbar"
 
 export default function Clubs() {
     return (
         <div>
-            <Header/>
-            <h2>Clubs</h2>
+            <Navbar/>
+            <h2>Clubs page</h2>
         </div>
     )
 }
