@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
 
     runs-on: ubuntu-latest
 
@@ -26,5 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Install Dependencies with NPM
+      run: npm install
+      working-directory: ./backend
+
+    - name: Compile Typescript and Build Project
+      run: npm run build
+      working-directory: ./backend
+
+    - name: Run Jest Unit Tests
+      run: npm run test
+      working-directory: ./backend
