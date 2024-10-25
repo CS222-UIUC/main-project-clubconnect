@@ -1,0 +1,36 @@
+name: Frontend Testing
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install Dependencies with NPM
+      run: npm install
+      working-directory: ./frontend
+
+    - name: Compile Typescript and Build Project
+      run: tsc
+      working-directory: ./frontend
+
+    - name: Run React Tests
+      run: npm run test
+      working-directory: ./frontend
