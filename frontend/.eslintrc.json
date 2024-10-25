@@ -1,0 +1,30 @@
+// {
+//     "extends": ["airbnb", "airbnb/hooks", "plugin:@typescript-eslint/recommended"],
+//     "parser": "@typescript-eslint/parser",
+//     "plugins": ["@typescript-eslint"],
+//     "env": {
+//       "browser": true,
+//       "es2021": true
+//     },
+//     "rules": {
+//       "semi": ["error", "always"],
+//       "quotes": ["error", "single"],
+//       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+//       "import/extensions": [
+//         "error",
+//         "ignorePackages",
+//         {
+//           "ts": "never",
+//           "tsx": "never"
+//         }
+//       ]
+//     },
+//     "settings": {
+//       "import/resolver": {
+//         "node": {
+//           "extensions": [".js", ".jsx", ".ts", ".tsx"]
+//         }
+//       }
+//     }
+//   }
+  
