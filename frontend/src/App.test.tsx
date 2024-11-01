@@ -24,7 +24,9 @@ test('renders Home page on open', () => {
     </MemoryRouter>
   );
 
-  expect(screen.getByText(/Home page/i)).toBeInTheDocument();
+  expect(screen.getByText(/Welcome to ClubConnect/i)).toBeInTheDocument();
+  expect(screen.getByText(/Why Choose/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Explore Clubs/i).length).toBeGreaterThan(0); //button and section
 });
 
 test('renders Home page when navigating to /home', () => {
@@ -34,8 +36,9 @@ test('renders Home page when navigating to /home', () => {
     </MemoryRouter>
   );
 
-  // Check if the login page is displayed
-  expect(screen.getByText(/Home page/i)).toBeInTheDocument();
+  expect(screen.getByText(/Welcome to ClubConnect/i)).toBeInTheDocument();
+  expect(screen.getByText(/Why Choose/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Explore Clubs/i).length).toBeGreaterThan(0); //button and section
 });
 
 test('renders Login page when navigating to /login', () => {
