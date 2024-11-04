@@ -6,5 +6,5 @@ export default function Clubs() {
             <Navbar/>
             <h2>Clubs page</h2>
         </div>
-    )
+    );
 }
