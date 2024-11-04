@@ -1,27 +1,26 @@
 import Navbar from "../components/Navbar";
+import ClubCard from "../components/ClubCard";
+import { Club } from "../types";
 import "../App.css";
-
-interface Club {
-  name: string;
-  description: string;
-  image: string;
-}
 
 const clubs: Club[] = [
   {
     name: "AI Club",
     description: "example description",
     image: "",
+    categories: ["Technology"],
   },
   {
     name: "Music Club",
     description: "example description",
     image: "",
+    categories: ["Music", "Art"],
   },
   {
     name: "Robotics Club",
     description: "example description",
     image: "",
+    categories: ["Engineering"],
   },
 ];
 
@@ -79,27 +78,14 @@ export default function Home() {
 
       <section id="clubs" className="py-5">
         <div className="container">
-            <h3 className="text-center mb-4">Explore Clubs</h3>
-            <div className="row">
+          <h3 className="text-center mb-4">Explore Clubs</h3>
+          <div className="row">
             {clubs.map((club, index) => (
-                <div key={index} className="col-md-4 mb-4">
-                <div className="card h-100 shadow-sm">
-                    <img
-                    src={club.image}
-                    className="card-img-top"
-                    alt={`${club.name} image`}
-                    />
-                    <div className="card-body">
-                    <h5 className="card-title">{club.name}</h5>
-                    <p className="card-text">{club.description}</p>
-                    <a href="#" className="btn btn-primary">
-                        Learn More
-                    </a>
-                    </div>
-                </div>
-                </div>
+              <div key={index} className="col-md-4 mb-4">
+                <ClubCard club={club} />
+              </div>
             ))}
-            </div>
+          </div>
         </div>
       </section>
     </div>
