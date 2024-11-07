@@ -2,31 +2,22 @@ import { Document } from "mongodb";
 import { Schema } from "mongoose";
 
 export interface Event extends Document {
-  // the name of the event
+  // what
   name: string;
   description: string;
   
-  // set a range for the event timing
+  // when
   startDateAndTime: Date;
   endDateAndTime: Date;
 
+  // where
   meetingAddress: string;
 
-  membersAttending: number;
+  // determines if only members or everyone can see events
+  isPublic: boolean;
 }
 
 // Keyword to represent what type of interest it is, and be flexible enough to add other information in the future
-export interface Keyword {
-  interestType: InterestType
-  name: string;
-}
-  
-export enum InterestType {
-  Professional,
-  Recreational,
-  Other,
-}
-
 export const eventSchema = new Schema({
   name: String,
   description: String,
@@ -35,5 +26,6 @@ export const eventSchema = new Schema({
   endDateAndTime: Date,
 
   meetingAddress: String,
-  membersAttending: Number,
+
+  isPublic: Boolean,
 });

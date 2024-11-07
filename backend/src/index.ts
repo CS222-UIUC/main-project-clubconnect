@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { createOrganization, getOrganizationById } from './organizations/routes';
+import { createTestObject, getTestObject } from './mongooseTest/testObj';
 
 async function main() {
   dotenv.config();
@@ -14,6 +16,11 @@ async function main() {
   application.use(express.json());
   
   // ADD ROUTES HERE
+  application.post("/org/create/", async (req, res) => await createOrganization(req, res));
+  application.get("/org/get/", async (req, res) => await getOrganizationById(req, res));
+
+  application.post("/test/create/", async(req, res) => await createTestObject(req, res));
+  application.post("/test/get/", async(req, res) => await getTestObject(req, res));
 
   // start the server
   application.listen(port, () => {
