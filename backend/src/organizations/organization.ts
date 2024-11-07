@@ -1,5 +1,5 @@
-import { Schema } from 'mongoose';
-import { Event, eventSchema, Keyword } from '../events/events';
+import { model, Schema } from 'mongoose';
+import { Event, eventSchema } from '../events/events';
 
 export interface Organization extends Document {
   name: string;
@@ -8,13 +8,9 @@ export interface Organization extends Document {
   established: Date;
   memberCount: number;
   
-  organizationId: string;
   profilePictureUrl: string;
   
-  // list of all events for the club, sorted by date
-  events: Event[];
-  
-  keywords: Keyword[];
+  keywords: string[];
 }
 
 const organizationSchema = new Schema({
@@ -26,5 +22,10 @@ const organizationSchema = new Schema({
 
   profilePictureUrl: String,
 
-  events: eventSchema,
+  // using an array of strings instead of nested objects for simplicity
+  keywords: [String],
+
+  // events: eventSchema,
 })
+
+export const organizationModel = model('Organization', organizationSchema);
