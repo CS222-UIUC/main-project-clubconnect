@@ -1,9 +1,7 @@
-// Clubs.tsx
 import React, { useState } from 'react';
 import ClubCard from "../components/ClubCard";
 import Navbar from "../components/Navbar";
 import { Club } from '../types';
-
 
 const clubsData: Club[] = [
     {
@@ -48,7 +46,7 @@ const uniqueCategories = Array.from(
     new Set(clubsData.flatMap((club) => club.categories))
 );
 
-const Clubs: React.FC = () => {
+const ClubsPage: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -110,4 +108,4 @@ const Clubs: React.FC = () => {
     );
 };
 
-export default Clubs;
+export default ClubsPage;
