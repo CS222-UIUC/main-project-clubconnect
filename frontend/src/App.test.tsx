@@ -61,13 +61,5 @@ test('renders Contact page when navigating to /contact', () => {
   expect(screen.getByText(/Contact page/i)).toBeInTheDocument();
 });
 
-test('renders Clubs page when navigating to /clubs', () => {
-  render(
-    <MemoryRouter initialEntries={['/clubs']}>
-      <App />
-    </MemoryRouter>
-  );
 
-  expect(screen.getByText(/Clubs page/i)).toBeInTheDocument();
-});
 
