@@ -4,7 +4,7 @@ export default function Profile() {
     return (
         <div>
             <Header/>
-            <h2>Profile</h2>
+            <h2>Profile Work Started</h2>
         </div>
     )
 }
