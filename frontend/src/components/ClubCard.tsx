@@ -1,6 +1,7 @@
-// ClubCard.tsx
 import React from 'react';
 import { Club } from '../types';
+import { Link } from 'react-router-dom';
+
 
 interface ClubCardProps {
     club: Club;
@@ -30,9 +31,9 @@ const ClubCard: React.FC<ClubCardProps> = ({ club }) => {
                     ))}
                 </div>
 
-                <a href="#" className="btn btn-primary">
+                <Link to={`/clubs/${club.name}`} state={{ club }} className="btn btn-primary">
                     Learn More
-                </a>
+                </Link>
             </div>
         </div>
     );

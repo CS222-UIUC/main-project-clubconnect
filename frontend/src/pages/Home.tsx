@@ -35,11 +35,8 @@ export default function Home() {
             Discover your community, find events, and join clubs that match your
             passions.
           </p>
-          <a href="#clubs" className="btn btn-primary btn-lg mx-2">
-            Explore Clubs
-          </a>
           <a href="/clubs" className="btn btn-primary btn-lg mx-2">
-            Explore Categories
+            Explore Clubs
           </a>
         </div>
       </section>

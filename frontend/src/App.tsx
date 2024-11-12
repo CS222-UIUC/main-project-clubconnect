@@ -6,7 +6,7 @@ import Clubs from "./pages/Clubs";
 import Login from "./pages/Login";
 import NoPage from "./pages/NoPage";
 import Contact from "./pages/Contact";
-import Navbar from "./components/Navbar";
+import ClubInfo from "./pages/ClubInfo";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -20,6 +20,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/clubs/:id" element={<ClubInfo />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
     </div>
