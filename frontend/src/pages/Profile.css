@@ -1,0 +1,87 @@
+.profile-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9e8df;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .edit-button {
+    padding: 10px 20px;
+    background-color: #ff8c69;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* About Section */
+  .about-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Interests Section */
+  .interests-section {
+    margin-bottom: 20px;
+  }
+  
+  .interests-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .interest {
+    background-color: #ffbf86;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .add-interest-button {
+    padding: 5px;
+    background-color: transparent;
+    border: 1px solid #ff8c69;
+    color: #ff8c69;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Saved Clubs Section */
+  .saved-clubs-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Resume Section */
+  .resume-section {
+    margin-bottom: 20px;
+  }
+  
+  .upload-button {
+    padding: 10px 20px;
+    background-color: #ff8c69;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
