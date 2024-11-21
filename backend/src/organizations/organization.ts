@@ -9,8 +9,6 @@ export interface Organization extends Document {
   memberCount: number;
   
   profilePictureUrl: string;
-  
-  keywords: string[];
 }
 
 const organizationSchema = new Schema({
@@ -21,9 +19,6 @@ const organizationSchema = new Schema({
   memberCount: Number,
 
   profilePictureUrl: String,
-
-  // using an array of strings instead of nested objects for simplicity
-  keywords: [String],
 
   // events: eventSchema,
 })
