@@ -1,8 +1,10 @@
+// users.ts
 import { Document, Schema, model } from 'mongoose';
 
 // Interface extending the Document to ensure type safety
 export interface User extends Document {
     userId: string;
+    password: string; // Added password field
 
     // Personal information for profile
     firstName: string;
@@ -39,6 +41,7 @@ const keywordSchema = new Schema<Keyword>({
 // Define Mongoose schema for the User
 const userSchema = new Schema<User>({
     userId: { type: String, required: true, unique: true },
+    password: { type: String, required: true }, // Added password field
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     major: { type: String, required: true },
@@ -50,5 +53,4 @@ const userSchema = new Schema<User>({
 });
 
 // Export the Mongoose model
-const UserModel = model<User>('User', userSchema);
-export default UserModel;
+export const UserModel = model<User>('User', userSchema);

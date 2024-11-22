@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import userRouter from './users/usersRoutes';
 
 async function main() {
   dotenv.config();
@@ -12,6 +13,7 @@ async function main() {
   
   // use the json middleware 
   application.use(express.json());
+  application.use('/users', userRouter);
   
   // ADD ROUTES HERE
 
