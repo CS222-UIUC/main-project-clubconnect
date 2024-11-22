@@ -75,7 +75,7 @@ export default function Home() {
 
       <section id="clubs" className="py-5">
         <div className="container">
-          <h3 className="text-center mb-4">Explore Clubs</h3>
+          <h3 className="text-center mb-4">My Clubs</h3>
           <div className="row">
             {clubs.map((club, index) => (
               <div key={index} className="col-md-4 mb-4">
