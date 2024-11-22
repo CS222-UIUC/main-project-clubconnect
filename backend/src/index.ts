@@ -1,8 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { createOrganization, getOrganizationById } from './organizations/routes';
 import { createTestObject, getTestObject } from './mongooseTest/testObj';
+import organizationsRouter from './organizations/routes';
 
 async function main() {
   dotenv.config();
@@ -14,14 +14,9 @@ async function main() {
   
   // use the json middleware 
   application.use(express.json());
+
+  application.use('/org', organizationsRouter);
   
-  // ADD ROUTES HERE
-  application.post("/org/create/", async (req, res) => await createOrganization(req, res));
-  application.get("/org/get/", async (req, res) => await getOrganizationById(req, res));
-
-  application.post("/test/create/", async(req, res) => await createTestObject(req, res));
-  application.post("/test/get/", async(req, res) => await getTestObject(req, res));
-
   // start the server
   application.listen(port, () => {
     console.log("Application is running on port " + port);    
