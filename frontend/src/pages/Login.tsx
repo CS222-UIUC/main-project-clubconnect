@@ -9,7 +9,10 @@ export default function Login() {
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
         
-        navigate("/profile");
+        navigate("/home");
+    };
+    const handleCreateAccount = () => {
+        navigate("/signup"); 
     };
 
     return (
@@ -32,7 +35,7 @@ export default function Login() {
 
                 <div className="additional-links">
                     <p><a href="/forgot-password">Forgot Password?</a></p>
-                    <p>Don’t have an account? <a href="/signup">Sign up here</a></p>
+                    <p>Don’t have an account? <button className="create-account-link" onClick={handleCreateAccount}>Create an account</button></p>
                 </div>
             </div>
         </div>

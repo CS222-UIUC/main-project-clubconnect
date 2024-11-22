@@ -15,8 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const routes_1 = require("./organizations/routes");
-const testObj_1 = require("./mongooseTest/testObj");
+const routes_1 = __importDefault(require("./organizations/routes"));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         dotenv_1.default.config();
@@ -25,11 +24,7 @@ function main() {
         const port = process.env.BACKEND_SERVER_PORT || 3000;
         // use the json middleware 
         application.use(express_1.default.json());
-        // ADD ROUTES HERE
-        application.post("/org/create/", (req, res) => __awaiter(this, void 0, void 0, function* () { return yield (0, routes_1.createOrganization)(req, res); }));
-        application.get("/org/get/", (req, res) => __awaiter(this, void 0, void 0, function* () { return yield (0, routes_1.getOrganizationById)(req, res); }));
-        application.post("/test/create/", (req, res) => __awaiter(this, void 0, void 0, function* () { return yield (0, testObj_1.createTestObject)(req, res); }));
-        application.post("/test/get/", (req, res) => __awaiter(this, void 0, void 0, function* () { return yield (0, testObj_1.getTestObject)(req, res); }));
+        application.use('/org', routes_1.default);
         // start the server
         application.listen(port, () => {
             console.log("Application is running on port " + port);
