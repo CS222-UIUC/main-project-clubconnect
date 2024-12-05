@@ -3,7 +3,7 @@ import { Document, Schema, model } from 'mongoose';
 
 // Interface extending the Document to ensure type safety
 export interface User extends Document {
-    userId: string;
+    email: string;
     password: string; // Added password field
 
     // Personal information for profile
@@ -40,7 +40,7 @@ const keywordSchema = new Schema<Keyword>({
 
 // Define Mongoose schema for the User
 const userSchema = new Schema<User>({
-    userId: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Added password field
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

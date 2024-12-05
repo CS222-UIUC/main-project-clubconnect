@@ -8,21 +8,21 @@ import jwt from 'jsonwebtoken';
 const SUPER_SECRET_KEY_FOR_JWT_SIGNING = "";
 
 interface JwtPayload {
-    userId: string;
+    email: string;
 }
 
 // Function to handle user login
 async function login(req: Request, res: Response) {
     try {
-        const { userId, password } = req.body;
+        const { email, password } = req.body;
 
-        if (!userId || !password) {
+        if (!email || !password) {
             res.status(400).json({ message: 'User ID and password are required' });
             return;
         }
 
-        // Find user by userId
-        const user = await UserModel.findOne({ userId });
+        // Find user by email
+        const user = await UserModel.findOne({ email });
         if (!user) {
             res.status(400).json({ message: 'Invalid user ID or password' });
             return;
@@ -36,7 +36,7 @@ async function login(req: Request, res: Response) {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user.userId }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
+        const token = jwt.sign({ email: user.email, id: user._id }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
 
         res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
@@ -48,7 +48,7 @@ async function login(req: Request, res: Response) {
 async function createUser(req: Request, res: Response) {
     try {
         const {
-            userId,
+            email,
             password,
             firstName,
             lastName,
@@ -60,7 +60,7 @@ async function createUser(req: Request, res: Response) {
         } = req.body;
 
         if (
-            !userId ||
+            !email ||
             !password ||
             !firstName ||
             !lastName ||
@@ -75,7 +75,7 @@ async function createUser(req: Request, res: Response) {
         }
 
         // Check if user already exists
-        const existingUser = await UserModel.findOne({ userId });
+        const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             res.status(400).json({ message: 'User already exists' });
             return;
@@ -85,7 +85,7 @@ async function createUser(req: Request, res: Response) {
 
         // Create new user
         const newUser = new UserModel({
-            userId,
+            email,
             password: hashedPassword,
             firstName,
             lastName,
@@ -98,7 +98,7 @@ async function createUser(req: Request, res: Response) {
         });
         await newUser.save();
 
-        const token = jwt.sign({ userId: newUser.userId }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
+        const token = jwt.sign({ email: newUser.email }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
 
         res.status(201).json({ message: 'User created successfully', token });
     } catch (error) {
@@ -125,14 +125,14 @@ async function followOrganization(req: Request, res: Response) {
 
         const decoded = jwt.decode(token) as JwtPayload;
 
-        if (!decoded || !decoded.userId) {
+        if (!decoded || !decoded.email) {
             res.status(401).json({ message: 'Invalid token payload' });
             return;
         }
 
-        const userId = decoded.userId;
+        const email = decoded.email;
 
-        const user = await UserModel.findOne({ userId });
+        const user = await UserModel.findOne({ email });
         if (!user) {
             res.status(404).json({ message: 'User not found' });
             return;
