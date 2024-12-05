@@ -3,7 +3,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 // NOTE this will be replaced by an actual key in an env file for production
-const SUPER_SECRET_KEY_FOR_JWT_SIGNING = ""
+const JWT_SECRET = process.env["JWT_SECRET"];
+
+if (!JWT_SECRET) { throw new Error("JWT secret could not be read from ") }
 
 /** Custom middleware that confirms a JWT is valid.
  *  This will call the next function if the credentials pass, otherwise it will return
@@ -23,11 +25,13 @@ export function jwtAuthMiddleware(req: Request, res: Response, next: NextFunctio
   
   try {
     // change this in production to use the key loaded from the env file
-    jwt.verify(authToken, SUPER_SECRET_KEY_FOR_JWT_SIGNING);
+    jwt.verify(authToken, JWT_SECRET as string);
   } catch(error) {
     res.status(401).json({message: "JWT is expired or invalid"});
     return;
   }
+
+  // set 
   
   // if it has passed all auth checks, continue
   next();

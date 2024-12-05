@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { createTestObject, getTestObject } from './mongooseTest/testObj';
 import organizationsRouter from './organizations/routes';
+//import { eventRouter } from './events/routes';
 
 async function main() {
   dotenv.config();
@@ -16,6 +17,7 @@ async function main() {
   application.use(express.json());
 
   application.use('/org', organizationsRouter);
+  //application.use('/event', eventRouter);
   
   // start the server
   application.listen(port, () => {
