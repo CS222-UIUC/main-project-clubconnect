@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const routes_1 = __importDefault(require("./organizations/routes"));
+//import { eventRouter } from './events/routes';
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         dotenv_1.default.config();
@@ -25,6 +26,7 @@ function main() {
         // use the json middleware 
         application.use(express_1.default.json());
         application.use('/org', routes_1.default);
+        //application.use('/event', eventRouter);
         // start the server
         application.listen(port, () => {
             console.log("Application is running on port " + port);

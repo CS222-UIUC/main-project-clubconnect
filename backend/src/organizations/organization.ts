@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose';
-import { Event, eventSchema } from '../events/events';
+import { model, ObjectId, Schema } from 'mongoose';
+//import { Event, eventSchema } from '../events/events';
 
 export interface Organization extends Document {
   name: string;
@@ -9,18 +9,22 @@ export interface Organization extends Document {
   memberCount: number;
   
   profilePictureUrl: string;
+
+  owner: ObjectId;
+  admins: ObjectId;
 }
 
 const organizationSchema = new Schema({
-  name: String,
-  description: String,
+  name: {type: String, required: true},
+  description: {type: String, required: true},
 
-  established: Date,
-  memberCount: Number,
+  established: {type: Date, required: true},
+  memberCount: {type: Number, required: true},
 
-  profilePictureUrl: String,
+  profilePictureUrl: {type: String, required: false},
 
-  // events: eventSchema,
+  owner: {type: Schema.Types.ObjectId, required: true},
+  admins: {type: [Schema.Types.ObjectId], required: true}
 })
 
 export const organizationModel = model('Organization', organizationSchema);
