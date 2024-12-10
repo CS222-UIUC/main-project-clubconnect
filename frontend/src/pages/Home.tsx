@@ -2,8 +2,9 @@ import Navbar from "../components/Navbar";
 import ClubCard from "../components/ClubCard";
 import { Club } from "../types";
 import "../App.css";
+import { useEffect, useState } from "react";
 
-const clubs: Club[] = [
+/*const clubs: Club[] = [
   {
     name: "AI Club",
     description: "example description",
@@ -22,9 +23,34 @@ const clubs: Club[] = [
     image: "",
     categories: ["Engineering"],
   },
-];
+];*/
 
 export default function Home() {
+
+  const [userClubs, setClubs] = useState<Club[]>([]);
+
+  const fetchClubs = async () => {
+    try {
+      const response = await fetch("/orgs/following", 
+      {
+        method:'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to load clubs');
+      }
+
+      const data = await response.json();
+      setClubs(data);
+    } catch (error) {
+      console.error('Error loading clubs:', error);
+      alert('Error loading clubs.');
+    }
+  }
+
+  fetchClubs();
+
   return (
     <div>
       <Navbar />
@@ -77,7 +103,7 @@ export default function Home() {
         <div className="container">
           <h3 className="text-center mb-4">My Clubs</h3>
           <div className="row">
-            {clubs.map((club, index) => (
+            {userClubs.map((club, index) => (
               <div key={index} className="col-md-4 mb-4">
                 <ClubCard club={club} />
               </div>

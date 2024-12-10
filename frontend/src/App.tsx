@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import ClubInfo from "./pages/ClubInfo";
 import logo from "./logo.svg";
 import Navbar from "./components/Navbar";
+import AddClubForm from "./pages/AddClub";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="addclub" element={<AddClubForm />} />
           <Route path="/clubs/:id" element={<ClubInfo />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
