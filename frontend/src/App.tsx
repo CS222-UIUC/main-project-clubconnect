@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import ClubInfo from "./pages/ClubInfo";
 import logo from "./logo.svg";
 import Navbar from "./components/Navbar";
+import AddClubForm from "./pages/AddClub";
 import "./App.css";
 
 function App() {

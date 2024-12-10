@@ -40,6 +40,11 @@ export default function Navbar({ handleLogout, token }: NavbarProps) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
+              <Link className="btn btn-outline-success" to="/addclub">
+                Add Club
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/home">
                 Home
               </Link>
@@ -73,6 +78,7 @@ export default function Navbar({ handleLogout, token }: NavbarProps) {
                 </Link>
               )}
             </li>
+
           </ul>
         </div>
       </div>
