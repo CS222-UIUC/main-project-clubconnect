@@ -4,7 +4,9 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">ClubConnect</a>
+        <a className="navbar-brand" href="#">
+          ClubConnect
+        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -18,6 +20,11 @@ export default function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="btn btn-outline-success" to="/addclub">
+                Add Club
+              </Link>
+            </li>
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/home">
                 Home
@@ -33,11 +40,11 @@ export default function Navbar() {
                 Contact
               </Link>
             </li>
-            <li className="nav-item">
+            {/*<li className="nav-item">
               <Link className="btn btn-outline-success" to="/login">
                 Login
               </Link>
-            </li>
+  </li>*/}
           </ul>
         </div>
       </div>

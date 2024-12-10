@@ -13,9 +13,63 @@ function ClubInfo() {
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
 
-  const [isSaved, setSave] = useState<boolean>(false);
-  const handleToggleSave = () => {
-    setSave((prev) => !prev);
+  const [clubData, setClubData] = useState({
+    name: club.name,
+    description: club.description,
+    categories: club.categories.join(", "),
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setClubData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await fetch('/org/', {
+        method:"PUT",
+        headers:{"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: clubData.name,
+          description: clubData.description,
+          categories: clubData.categories
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error updating club:", error);
+      alert("Error updating club. Please try again.");
+    }
+  };
+
+  const [following, setFollow] = useState<boolean>(false);
+  const handleToggleSave = async () => {
+    setFollow((prev) => !prev);
+    if (!following) {
+      try {
+        const response = await fetch('/user/followOrg', {
+          method:"POST",
+          headers:{"Content-Type": "application/json"},
+          body:JSON.stringify(club)
+        })
+        if (response.ok) {
+          console.log("Club followed successfully");
+        } else {
+            const errorMessage = await response.text();
+            console.error("Error response from server:", errorMessage);
+            alert("Failed to follow club. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error following club:", error);
+        alert("Error following club. Please try again.");
+      }
+    }
   };
 
   return (
@@ -71,10 +125,10 @@ function ClubInfo() {
 
       <div className="d-flex justify-content-center mt-4">
         <button 
-          className={`btn-lg btn ${isSaved ? 'btn-success' : 'btn-primary'}`} 
+          className={`btn-lg btn ${following ? 'btn-success' : 'btn-primary'}`} 
           onClick={handleToggleSave}
         >
-          {isSaved ? 'Following' : 'Follow Club'}
+          {following ? 'Following' : 'Follow Club'}
         </button>
       </div>
 
@@ -93,6 +147,7 @@ function ClubInfo() {
                 className="form-control"
                 id="clubName"
                 defaultValue={club.name}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-3">
@@ -104,6 +159,7 @@ function ClubInfo() {
                 className="form-control"
                 id="clubCategories"
                 defaultValue={club.categories.join(", ")}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-3">
@@ -115,6 +171,7 @@ function ClubInfo() {
                 id="clubDescription"
                 rows={4}
                 defaultValue={club.description}
+                onChange={handleChange}
               />
             </div>
           </form>
@@ -123,7 +180,7 @@ function ClubInfo() {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleUpdate}>
             Save Changes
           </Button>
         </Modal.Footer>
