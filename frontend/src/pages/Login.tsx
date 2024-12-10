@@ -1,23 +1,52 @@
-import Navbar from "../components/Navbar"
+//import Navbar from "../components/Navbar"
 import { useNavigate } from "react-router-dom"; 
-import React from "react";
+import React, { useState } from "react";
 import './Login.css';
 
-export default function Login() {
-    const navigate = useNavigate(); 
 
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+interface LoginProps {
+    setToken: (token: string | null) => void;
+  }
+  export default function Login({ setToken }: LoginProps) {
+    const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null); 
+    const [authToken, setAuthToken] = useState<string | null>(null); 
+
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
+
+        const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value;
+        const password = (e.currentTarget.elements.namedItem("password") as HTMLInputElement).value;
         
-        navigate("/home");
+        try {
+            const response = await fetch("/user/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+      
+            if (!response.ok) {
+              throw new Error("Invalid email or password.");
+            }
+      
+            const data = await response.json();
+      
+            setToken(data.token);
+      
+            navigate("/home");
+          } catch (error: any) {
+            console.error(error);
+            setError("Invalid email or password. Please try again."); 
+        }
     };
+
+    
     const handleCreateAccount = () => {
         navigate("/signup"); 
     };
 
     return (
         <div>
-            <Navbar/>
             <div className="login-container">
                 <h2>Welcome Back!</h2>
                 <p className="login-description">Log in to access your personalized dashboard, manage your clubs, and stay updated on events across campus.</p>

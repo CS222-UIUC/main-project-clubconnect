@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+interface NavbarProps {
+  handleLogout?: () => void;
+  token?: string | null;
+}
+
+export default function Navbar({ handleLogout, token }: NavbarProps) {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">ClubConnect</a>
+        <Link className="navbar-brand" to="/home">
+          ClubConnect
+        </Link>
         <form className="d-flex" role="search">
           <input
             className="form-control me-2"
@@ -45,9 +55,23 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="btn btn-outline-success" to="/login">
-                Login
-              </Link>
+              {token ? (
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    if (handleLogout) {
+                      handleLogout();
+                    }
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link className="btn btn-outline-success" to="/login">
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>

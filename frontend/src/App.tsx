@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -13,20 +13,46 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 
 function App() {
+  const [token, setToken] = useState<string | null>(null);
+
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  };
+  
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+    } else {
+      setToken(null); 
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+        localStorage.setItem("token", token); 
+    }
+}, [token]);
+
   return (
-    <div>
-        <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/clubs" element={<Clubs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/clubs/:id" element={<ClubInfo />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-    </div>
+      <div>
+          <Navbar handleLogout={handleLogout} token={token} /> {/* Pass logout function */}
+          <Routes>
+          <Route path="/" element={token === null ? <Navigate to="/login" replace /> : <Navigate to="/home" replace />}/>
+            <Route path="/login" element={<Login setToken={setToken} />} />
+            <Route path="/signup" element={<Signup />} />
+
+            {/* Protect authenticated routes */}
+            <Route path="/home" element={token ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/profile" element={token ? <Profile /> : <Navigate to="/login" />} />
+            <Route path="/clubs" element={token ? <Clubs /> : <Navigate to="/login" />} />
+            <Route path="/contact" element={token ? <Contact /> : <Navigate to="/login" />} />
+            <Route path="/clubs/:id" element={token ? <ClubInfo /> : <Navigate to="/login" />} />
+
+            <Route path="*" element={<Navigate to={token ? "/home" : "/login"} replace />} />
+          </Routes>
+      </div>
   );
 }
 /*
