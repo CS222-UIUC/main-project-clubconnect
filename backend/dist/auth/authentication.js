@@ -17,24 +17,30 @@ exports.hashPassword = hashPassword;
 exports.passwordsMatch = passwordsMatch;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-// NOTE this will be replaced by an actual key in an env file for production
-const SUPER_SECRET_KEY_FOR_JWT_SIGNING = "";
 /** Custom middleware that confirms a JWT is valid.
  *  This will call the next function if the credentials pass, otherwise it will return
  *  a HTTP 401 unauthorized error
  */
 function jwtAuthMiddleware(req, res, next) {
+    const JWT_SECRET = process.env["JWT_SECRET"];
+    if (!JWT_SECRET) {
+        throw new Error("JWT secret could not be read from env file");
+    }
     // obtain the JWT from the request header
-    const unparsedAuthHeader = req.headers["Authorization"];
-    if (unparsedAuthHeader == null && unparsedAuthHeader != undefined && !(Array.isArray(unparsedAuthHeader))) {
+    const unparsedAuthHeader = req.get("Authorization");
+    if (unparsedAuthHeader == undefined /* && !(Array.isArray(unparsedAuthHeader))*/) {
         res.status(401).json({ message: 'Must provide an Authentication header with a Bearer token for proper request auth' });
         return;
     }
     const authHeader = unparsedAuthHeader;
+    if (!authHeader.startsWith("Bearer ")) {
+        res.status(401).json({ message: "Authorization header must start with 'Bearer '" });
+        return;
+    }
     const authToken = authHeader.split(" ")[1];
     try {
         // change this in production to use the key loaded from the env file
-        jsonwebtoken_1.default.verify(authToken, SUPER_SECRET_KEY_FOR_JWT_SIGNING);
+        jsonwebtoken_1.default.verify(authToken, JWT_SECRET);
     }
     catch (error) {
         res.status(401).json({ message: "JWT is expired or invalid" });

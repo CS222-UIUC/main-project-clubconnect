@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -10,23 +10,54 @@ import Contact from "./pages/Contact";
 import ClubInfo from "./pages/ClubInfo";
 import logo from "./logo.svg";
 import Navbar from "./components/Navbar";
+import AddClubForm from "./pages/AddClub";
 import "./App.css";
 
 function App() {
+  const [token, setToken] = useState<string | null>(null);
+
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  };
+  
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+    } else {
+      setToken(null); 
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+        localStorage.setItem("token", token); 
+    }
+}, [token]);
+
   return (
-    <div>
-        <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/clubs" element={<Clubs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/clubs/:id" element={<ClubInfo />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-    </div>
+      <div>
+          <Routes>
+
+            <Route path="/" element={<Home />} />
+
+            <Route path="/login" element={<Login setToken={setToken} />} />
+
+            <Route path="/signup" element={<Signup />} />
+
+            <Route path="/profile" element={<Profile />} />
+
+            <Route path="/clubs" element={<Clubs />} />
+
+            <Route path="/contact" element={<Contact />} />
+
+            <Route path="/clubs/:id" element={<ClubInfo />} />
+
+            <Route path="*" element={<NoPage />} />
+
+          </Routes>
+      </div>
   );
 }
 /*

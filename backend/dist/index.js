@@ -15,15 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const usersRoutes_1 = __importDefault(require("./users/usersRoutes"));
+const routes_1 = __importDefault(require("./organizations/routes"));
+const cors_1 = __importDefault(require("cors"));
+dotenv_1.default.config();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        dotenv_1.default.config();
         yield mongooseSetup();
         const application = (0, express_1.default)();
-        const port = process.env.BACKEND_SERVER_PORT || 3000;
+        const port = process.env.BACKEND_SERVER_PORT || 2000;
         // use the json middleware 
+        application.use((0, cors_1.default)());
         application.use(express_1.default.json());
-        // ADD ROUTES HERE
+        application.use('/users', usersRoutes_1.default);
+        application.use('/orgs', routes_1.default);
         // start the server
         application.listen(port, () => {
             console.log("Application is running on port " + port);

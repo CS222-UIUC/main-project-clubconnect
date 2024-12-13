@@ -13,7 +13,7 @@ export interface User extends Document {
     age: number;
     bio: string;
     profilePictureUrl: string;
-    followed_orgs: string[]; // Specify array of strings for organization IDs
+    followedOrgs: string[]; // Specify array of strings for organization IDs
     keywords: Keyword[];
 }
 
@@ -48,7 +48,7 @@ const userSchema = new Schema<User>({
     age: { type: Number, required: true },
     bio: { type: String, required: true },
     profilePictureUrl: { type: String, required: true },
-    followed_orgs: { type: [String], required: true }, // Array of strings for followed_orgs
+    followedOrgs: { type: [String], required: true }, // Array of strings for followed_orgs
     keywords: { type: [keywordSchema], required: true }, // Use the keyword schema
 });
 

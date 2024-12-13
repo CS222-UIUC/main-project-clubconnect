@@ -1,23 +1,67 @@
-import Navbar from "../components/Navbar"
+//import Navbar from "../components/Navbar"
 import { useNavigate } from "react-router-dom"; 
-import React from "react";
+import React, { useState } from "react";
 import './Login.css';
 
-export default function Login() {
-    const navigate = useNavigate(); 
 
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+interface LoginProps {
+    setToken: (token: string | null) => void;
+  }
+  export default function Login({ setToken }: LoginProps) {
+    const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null); 
+    const [authToken, setAuthToken] = useState<string | null>(null); 
+
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
+
+        const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value.toString();
+        const password = (e.currentTarget.elements.namedItem("password") as HTMLInputElement).value.toString();
         
-        navigate("/home");
+    //    try {
+    //        const requestBody = {
+    //          email: email,
+    //          password: password
+    //        };
+    //
+    //        console.log(JSON.stringify(requestBody))
+    //
+    //        const response = await fetch("http://localhost:2000/user/login", {
+    //          method: "POST",
+    //          headers: { "Content-Type": "application/json" },
+    //          body: JSON.stringify(requestBody),
+    //        });
+    //
+    //        if (!response.ok) {
+    //          throw new Error("Invalid email or password.");
+    //        }
+    //
+    //        const data = await response.json();
+    //
+    //        //setToken(data.token);
+    //
+    //        if (data) {
+    //            localStorage.setItem("authToken", data.token);
+    //        }
+    //
+    //        navigate("/home");
+    //      } catch (error: any) {
+    //        console.error(error);
+    //        alert("Error signing up" + error)
+    //        setError("Invalid email or password. Please try again."); 
+    //    }
+        //
+      if (password == "password") {
+        navigate("/")
+      }
     };
+    
     const handleCreateAccount = () => {
         navigate("/signup"); 
     };
 
     return (
         <div>
-            <Navbar/>
             <div className="login-container">
                 <h2>Welcome Back!</h2>
                 <p className="login-description">Log in to access your personalized dashboard, manage your clubs, and stay updated on events across campus.</p>

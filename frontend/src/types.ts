@@ -1,6 +1,7 @@
 export interface Club {
     name: string;
     description: string;
-    image: string;
+    member_count: number;
+    established: string;
     categories: string[];
 }

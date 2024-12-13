@@ -5,7 +5,6 @@ import { hashPassword, passwordsMatch, jwtAuthMiddleware } from '../auth/authent
 import jwt from 'jsonwebtoken';
 
 // NOTE: Replace this with your actual secret key in production
-const SUPER_SECRET_KEY_FOR_JWT_SIGNING = "";
 
 interface JwtPayload {
     email: string;
@@ -13,6 +12,13 @@ interface JwtPayload {
 
 // Function to handle user login
 async function login(req: Request, res: Response) {
+
+  const JWT_SECRET: string = process.env["JWT_SECRET"] || "";
+
+  if (!JWT_SECRET) {
+    throw new Error("cannot read the jwt secret from env file")
+  }
+
     try {
         const { email, password } = req.body;
 
@@ -36,7 +42,7 @@ async function login(req: Request, res: Response) {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ email: user.email, id: user._id }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
+        const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
@@ -46,6 +52,12 @@ async function login(req: Request, res: Response) {
 
 // Function to create a new user
 async function createUser(req: Request, res: Response) {
+
+  const JWT_SECRET: string = process.env["JWT_SECRET"] || "";
+
+  if (!JWT_SECRET) {
+    throw new Error("cannot read the jwt secret from env file")
+  }
     try {
         const {
             email,
@@ -58,6 +70,16 @@ async function createUser(req: Request, res: Response) {
             profilePictureUrl,
             keywords,
         } = req.body;
+
+        //if (!email) {console.log("Email")}
+        //if (!password) {console.log("Password")}
+        //if (!firstName) {console.log("first")}
+        //if (!lastName) {console.log("last")}
+        //if (!major) {console.log("major")}
+        //if (!age) {console.log("age")}
+        //if (!bio) {console.log("bio")}
+        //if (!profilePictureUrl) {console.log("prof")}
+        //if (!keywords) {console.log("key")}
 
         if (
             !email ||
@@ -93,12 +115,12 @@ async function createUser(req: Request, res: Response) {
             age,
             bio,
             profilePictureUrl,
-            followed_orgs: [],
+            followedOrgs: [],
             keywords,
         });
         await newUser.save();
 
-        const token = jwt.sign({ email: newUser.email }, SUPER_SECRET_KEY_FOR_JWT_SIGNING, { expiresIn: '1h' });
+        const token = jwt.sign({ email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(201).json({ message: 'User created successfully', token });
     } catch (error) {
@@ -116,8 +138,8 @@ async function followOrganization(req: Request, res: Response) {
             return;
         }
 
-        const authHeader = req.headers['authorization'];
-        if (!authHeader) {
+        const authHeader = req.get('Authorization') || undefined;
+        if (!authHeader || Array.isArray(authHeader)) {
             res.status(401).json({ message: 'Authorization header missing' });
             return;
         }
@@ -143,18 +165,20 @@ async function followOrganization(req: Request, res: Response) {
             return;
         }
 
-        user.followed_orgs = user.followed_orgs || [];
-        if (user.followed_orgs.includes(orgId)) {
+        user.followedOrgs = user.followedOrgs || [];
+        if (user.followedOrgs.includes(orgId)) {
             res.status(400).json({ message: 'Already following this organization' });
             return;
         }
 
-        user.followed_orgs.push(orgId);
+        user.followedOrgs.push(orgId);
         await user.save();
 
         res.status(200).json({ message: 'Organization followed successfully' });
+        return;
     } catch (error) {
         res.status(500).json({ message: JSON.stringify(error) });
+        return;
     }
 }
 
@@ -166,3 +190,5 @@ userRouter.post('/', createUser);
 userRouter.post('/followOrg', jwtAuthMiddleware, followOrganization);
 
 export default userRouter;
+
+
